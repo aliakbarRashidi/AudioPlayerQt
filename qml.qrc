@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>steam-avatar-profile-picture-0187.jpg</file>
+        <file>play-icon-white.png</file>
+        <file>open-file.png</file>
+        <file>up.png</file>
+        <file>folder.png</file>
+        <file>FilePicker.qml</file>
+        <file>ic_insert_drive_file_black_48dp.png</file>
+        <file>ic_folder_open_black_48dp.png</file>
+    </qresource>
+</RCC>
