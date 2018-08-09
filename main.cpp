@@ -4,6 +4,8 @@
 #include <QQuickStyle>
 #include <QQuickView>
 #include <QQmlContext>
+#include <QQmlComponent>
+#include <QSlider>
 #include "inputhandler.h"
 
 int main(int argc, char *argv[])
@@ -14,13 +16,13 @@ int main(int argc, char *argv[])
 
     QQuickStyle::setStyle("Material");
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    if (engine.rootObjects().isEmpty())
-        return -1;
+    QQmlEngine engine;
+    QQmlComponent component(&engine, "qrc:/main.qml");
+	QObject *object = component.create();
 
-    InputHandler inputHandler;
+    InputHandler inputHandler(object);
     engine.rootContext()->setContextProperty("inputHandler", &inputHandler);
+
 
     return app.exec();
 }

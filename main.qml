@@ -25,50 +25,54 @@ Window {
         x: parent.width/2 - width/2
         y: parent.height * 0.1
         rotation: 0
-        source: "steam-avatar-profile-picture-0187.jpg"
+        source: "icons/steam-avatar-profile-picture-0187.jpg"
     }
 
     Button {
         background: Image {
             id: play
             anchors.fill: parent
-            source: "play-icon-white"
+            source: "icons/play-icon-white"
             opacity: playButton.pressed ? 0.7 : 1.0
         }
         onClicked: inputHandler.playButtonClicked()
         id: playButton
         x: parent.width/2 - width/2
         y: parent.height * 0.79
-        width: 84
-        height: 84
+        width: playButton.pressed ? 80 : 84
+        height: playButton.pressed ? 80 : 84
         enabled: true
         visible: true
+        objectName: "playButton"
     }
 
     Slider {
-        id: slider
+        id: positionSlider
         x: parent.width/2 - width/2
         y: parent.height * 0.70
         width: 285
         height: 22
-        stepSize: 0.1
-        to: 10
+        stepSize: 1
+        to: 100
         value: 0
+        objectName: "positionSlider"
+        onMoved: inputHandler.positionSliderMoved(positionSlider.value)
+
     }
 
     Button {
         background: Image {
             id: open
             anchors.fill: parent
-            source: "open-file"
+            source: "icons/open-file"
             opacity: openButton.pressed ? 0.7 : 1.0
         }
         onClicked:filePicker.visible = true
         id: openButton
-        x: parent.width * 0.15
-        y: parent.height * 0.815
-        width: 45
-        height: 45
+        x: parent.width * 0.2
+        y: parent.height * 0.83
+        width: 30
+        height: 30
     }
 
     FilePicker {
@@ -80,5 +84,23 @@ Window {
             inputHandler.openButtonClicked(currentFolder() + "/" +fileName)
             filePicker.visible = false
         }
+    }
+
+    Button {
+        background: Image {
+            id: pause
+            anchors.fill: parent
+            source: "icons/pause-icon-white"
+            opacity: pauseButton.pressed ? 0.7 : 1.0
+        }
+        onClicked: inputHandler.pauseButtonClicked()
+        id: pauseButton
+        x: parent.width/2 - width/2
+        y: parent.height * 0.79
+        width: pauseButton.pressed ? 80 : 84
+        height: pauseButton.pressed ? 80 : 84
+        enabled: false
+        visible: false
+        objectName: "pauseButton"
     }
 }

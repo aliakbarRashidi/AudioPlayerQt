@@ -1,0 +1,8 @@
+﻿  Generate moc_predefs.h
+  Moc'ing inputhandler.h...
+  Rcc'ing qml.qrc...
+  inputhandler.cpp
+  main.cpp
+  moc_inputhandler.cpp
+  qrc_qml.cpp
+LINK : fatal error LNK1158: cannot run 'rc.exe'
