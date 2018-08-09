@@ -2,7 +2,6 @@
 #include <QMediaPlayer>
 #include <qqmlapplicationengine.h>
 
-
 class InputHandler: public QObject
 {
 Q_OBJECT
@@ -20,7 +19,4 @@ private:
     QObject* object;
     bool positionSliderIsPressed = false;
 	void changeQMLProperty(QString objName, const char* prop, QVariant value);
-
-
-
 };

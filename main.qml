@@ -15,64 +15,110 @@ Window {
     width: 640
     height: 480
     color: "#252323"
-    title: qsTr("Hello World")
-
     Material.theme: Material.Dark
     Material.accent: Material.Purple
 
-    Image {
-        id: image
-        x: parent.width/2 - width/2
-        y: parent.height * 0.1
-        rotation: 0
-        source: "icons/steam-avatar-profile-picture-0187.jpg"
-    }
-
-    Button {
+    Button { // playButton
         background: Image {
             id: play
             anchors.fill: parent
-            source: "icons/play-icon-white"
-            opacity: playButton.pressed ? 0.7 : 1.0
+            source: "icons/play-icon-white.png"
+            opacity: playButton.pressed ? 0.6 : 1.0
         }
         onClicked: inputHandler.playButtonClicked()
         id: playButton
         x: parent.width/2 - width/2
-        y: parent.height * 0.79
-        width: playButton.pressed ? 80 : 84
-        height: playButton.pressed ? 80 : 84
+        y: parent.height - parent.height/5
+        width: playButton.pressed ? 65 : 74
+        height: playButton.pressed ? 65 : 74
+        smooth: true
+        antialiasing: true
+        bottomPadding: 0
+        leftPadding: 0
+        topPadding: 0
+        font.family: "Times New Roman"
+        focusPolicy: Qt.StrongFocus
         enabled: true
         visible: true
         objectName: "playButton"
     }
 
-    Slider {
+    Button {
+        background: Image {
+            id: pause
+            anchors.fill: parent
+            source: "icons/pause-icon-white.png"
+            opacity: pauseButton.pressed ? 0.6 : 1.0
+        }
+        onClicked: inputHandler.pauseButtonClicked()
+        id: pauseButton
+        x: parent.width/2 - width/2
+        y: parent.height - parent.height/5
+        width: pauseButton.pressed ? 65 : 74
+        height: pauseButton.pressed ? 65 : 74
+        antialiasing: true
+        autoRepeat: false
+        highlighted: false
+        wheelEnabled: false
+        padding: 0
+        enabled: false
+        visible: false
+        objectName: "pauseButton"
+    }
+
+    Slider { // positionSlider
         id: positionSlider
         x: parent.width/2 - width/2
         y: parent.height * 0.70
-        width: 285
-        height: 22
+        width: parent.width/1.5
+        height: 25
+        antialiasing: true
         stepSize: 1
         to: 100
         value: 0
         objectName: "positionSlider"
         onMoved: inputHandler.positionSliderMoved(positionSlider.value)
+    }
 
+    Label {
+        id: label_timeElapsed
+        x: parent.width/10 - width/2
+        y: parent.height * 0.707
+        color: "#ffffff"
+        text: "00:00"
+        horizontalAlignment: Text.AlignHCenter
+        objectName: "label_timeElapsed"
+    }
+
+    Label {
+        id: label_timeTotal
+        x: parent.width - parent.width/10 - width/2
+        y: parent.height * 0.707
+        color: "#ffffff"
+        text: "00:00"
+        horizontalAlignment: Text.AlignHCenter
+        objectName: "label_timeTotal"
     }
 
     Button {
         background: Image {
             id: open
             anchors.fill: parent
-            source: "icons/open-file"
+            source: "icons/icon-list-100-white"
             opacity: openButton.pressed ? 0.7 : 1.0
         }
         onClicked:filePicker.visible = true
         id: openButton
-        x: parent.width * 0.2
-        y: parent.height * 0.83
-        width: 30
-        height: 30
+        x: parent.width/4 - width
+        y: parent.height - parent.height/6.3
+        width: 25
+        height: 25
+        antialiasing: true
+        padding: 0
+        leftPadding: 0
+        rightPadding: 0
+        bottomPadding: 0
+        topPadding: 0
     }
 
     FilePicker {
@@ -84,23 +130,5 @@ Window {
             inputHandler.openButtonClicked(currentFolder() + "/" +fileName)
             filePicker.visible = false
         }
-    }
-
-    Button {
-        background: Image {
-            id: pause
-            anchors.fill: parent
-            source: "icons/pause-icon-white"
-            opacity: pauseButton.pressed ? 0.7 : 1.0
-        }
-        onClicked: inputHandler.pauseButtonClicked()
-        id: pauseButton
-        x: parent.width/2 - width/2
-        y: parent.height * 0.79
-        width: pauseButton.pressed ? 80 : 84
-        height: pauseButton.pressed ? 80 : 84
-        enabled: false
-        visible: false
-        objectName: "pauseButton"
     }
 }

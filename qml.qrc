@@ -10,5 +10,8 @@
         <file>icons/ic_insert_drive_file_black_48dp.png</file>
         <file>icons/ic_folder_open_black_48dp.png</file>
         <file>icons/folder.png</file>
+        <file>icons/play-thin-white.png</file>
+        <file>icons/pause-thin-white.png</file>
+        <file>icons/icon-list-100-white.png</file>
     </qresource>
 </RCC>

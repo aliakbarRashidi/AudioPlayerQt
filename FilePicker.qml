@@ -36,7 +36,7 @@ Item {
     property bool showDotAndDotDot: false
     property bool showHidden: true
     property bool showDirsFirst: true
-    property string folder: "file:///sdcard"
+    property string folder: "file:///storage/1234-5678"
     property string nameFilters: "*.mp3"
 
     function currentFolder() {

@@ -23,6 +23,5 @@ int main(int argc, char *argv[])
     InputHandler inputHandler(object);
     engine.rootContext()->setContextProperty("inputHandler", &inputHandler);
 
-
     return app.exec();
 }
