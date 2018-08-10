@@ -35,6 +35,16 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Distribution Files">
+      <UniqueIdentifier>{B83CAF91-C7BF-462F-B76C-EA11631F866C}</UniqueIdentifier>
+      <Extensions>*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Distribution Files">
+      <UniqueIdentifier>{B83CAF91-C7BF-462F-B76C-EA11631F866C}</UniqueIdentifier>
+      <Extensions>*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="inputhandler.cpp">
@@ -65,32 +75,67 @@
     <None Include="FilePicker.qml">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="folder.png">
+    <None Include="icons\folder.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ic_folder_open_black_48dp.png">
+    <None Include="icons\ic_folder_open_black_48dp.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ic_insert_drive_file_black_48dp.png">
+    <None Include="icons\ic_insert_drive_file_black_48dp.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="icons\icon-list-100-white.png">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="main.qml">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="open-file.png">
+    <None Include="icons\open-file.png">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="play-icon-white.png">
+    <None Include="icons\pause-icon-white.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="icons\pause-thin-white.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="icons\play-icon-white.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="icons\play-thin-white.png">
       <Filter>Resource Files</Filter>
     </None>
     <QtRcc Include="qml.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
-    <None Include="steam-avatar-profile-picture-0187.jpg">
+    <None Include="icons\steam-avatar-profile-picture-0187.jpg">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="up.png">
+    <None Include="icons\up.png">
       <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="android\AndroidManifest.xml">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android\build.gradle">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android\gradle\wrapper\gradle-wrapper.jar">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android\gradle\wrapper\gradle-wrapper.properties">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android\gradlew.bat">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android\gradlew">
+      <Filter>Distribution Files</Filter>
+    </None>
+    <None Include="android\res\values\libs.xml">
+      <Filter>Distribution Files</Filter>
     </None>
   </ItemGroup>
 </Project>

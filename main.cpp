@@ -6,6 +6,7 @@
 #include <QQmlContext>
 #include <QQmlComponent>
 #include <QSlider>
+#include <QKeyEvent>
 #include "inputhandler.h"
 
 int main(int argc, char *argv[])
@@ -18,10 +19,17 @@ int main(int argc, char *argv[])
 
     QQmlEngine engine;
     QQmlComponent component(&engine, "qrc:/main.qml");
-	QObject *object = component.create();
+    QObject *object = component.create();
 
     InputHandler inputHandler(object);
     engine.rootContext()->setContextProperty("inputHandler", &inputHandler);
 
     return app.exec();
+}
+
+
+bool QApplication::notify(QObject* object, QEvent* event)
+{
+    qDebug() << "back key got pressed!";
+
 }

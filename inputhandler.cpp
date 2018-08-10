@@ -1,9 +1,4 @@
 #include "inputhandler.h"
-#include <QQmlComponent>
-#include <QDebug>
-#include <QQuickView>
-#include <QQuickItem>
-#include <QDateTime>
 
 InputHandler::InputHandler(QObject* engineObject)
 {
@@ -28,9 +23,8 @@ void InputHandler::openButtonClicked(QString path)
     // Try to laod the file
     QMediaContent file = QUrl(path);
 
-    if (!file.isNull()) // if file
+    if(!file.isNull())
     {
-        qDebug() << "Loading: " << path; // print
         player->setMedia(file); // Load file
         player->setVolume(50); // Set volume
         player->play(); // Play
@@ -62,6 +56,12 @@ void InputHandler::openButtonClicked(QString path)
             // Set the label_timeElapsed label to song position
             QString positionFormatted = QDateTime::fromTime_t(pos/1000).toUTC().toString("mm:ss");
             changeQMLProperty("label_timeElapsed", "text", positionFormatted);
+        });
+
+        // When the meta data changed
+        connect(player, QOverload<>::of(&QMediaObject::metaDataChanged),[=]()
+        {
+            getMetaData(path);
         });
 
         // Gets the state of the player
@@ -121,6 +121,30 @@ void InputHandler::positionSliderMoved(quint16 position)
     player->setPosition(position * 1000); // Set the player position to position * 1000 -> sec to msec
 }
 
+void InputHandler::getMetaData(QString path)
+{
+    // This function tries to get the meta data for the loaded audio
+    qDebug() << player->availableMetaData(); // Returns a list of keys there is meta-data available for.
+    QString artist = player->metaData(QMediaMetaData::ContributingArtist).toString();
+    QString title = player->metaData(QMediaMetaData::Title).toString();
+    qDebug() << "Artist: " << artist;
+    qDebug() << "Title: " << title;
+
+    changeQMLProperty("title_label", "text", title);
+    changeQMLProperty("artist_label", "text", artist);
+}
+
+void InputHandler::keyPressEvent(QKeyEvent* event)
+{
+    qDebug() << event->key();
+
+    if(event->key() == Qt::BackButton)
+    {
+
+    }
+
+}
+
 void InputHandler::changeQMLProperty(QString objName, const char* prop, QVariant value)
 {
     // Function to change qml properties in the main.qml
@@ -128,3 +152,4 @@ void InputHandler::changeQMLProperty(QString objName, const char* prop, QVariant
     if (obj)
         obj->setProperty(prop, value.toString());
 }
+

@@ -17,6 +17,15 @@ Window {
     color: "#252323"
     Material.theme: Material.Dark
     Material.accent: Material.Purple
+    onClosing: { // the only way it works, since Qt 5.1, and the IDE still thinks its an error, thank you Qt <3
+        console.log("wo samma heite?")
+
+        if(filePicker.visible == true)
+        {
+            close.accepted = false
+            filePicker.visible = false
+        }
+    }
 
     Button { // playButton
         background: Image {
@@ -73,7 +82,7 @@ Window {
         width: parent.width/1.5
         height: 25
         antialiasing: true
-        stepSize: 1
+        stepSize: 0.1
         to: 100
         value: 0
         objectName: "positionSlider"
@@ -130,5 +139,38 @@ Window {
             inputHandler.openButtonClicked(currentFolder() + "/" +fileName)
             filePicker.visible = false
         }
+    }
+
+    Label {
+        id: title_label
+        x: parent.width/2 - width/2
+        y: parent.height * 0.57
+        color: "#ffffff"
+        text: ""
+        font.bold: true
+        font.pointSize: 19
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        objectName: "title_label"
+    }
+
+    Label {
+        id: artist_label
+        x: parent.width/2 - width/2
+        y: parent.height * 0.62
+        color: "#ffffff"
+        text: ""
+        font.bold: true
+        font.pointSize: 15
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        objectName: "artist_label"
+    }
+
+    Keys.onPressed: {
+            console.log(event.key)
+        }
+    Keys.onBackPressed: {
+        console.log("samma wo oda woos?")
     }
 }

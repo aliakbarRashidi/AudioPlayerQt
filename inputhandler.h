@@ -1,5 +1,13 @@
 #include <QObject>
+#include <QQmlComponent>
+#include <QDebug>
+#include <QQuickView>
+#include <QQuickItem>
+#include <QDateTime>
 #include <QMediaPlayer>
+#include <QAudioBuffer>
+#include <QAudioOutput>
+#include <QMediaMetaData>
 #include <qqmlapplicationengine.h>
 
 class InputHandler: public QObject
@@ -18,5 +26,7 @@ private:
     QMediaPlayer* player; // Create MediaPlayer
     QObject* object;
     bool positionSliderIsPressed = false;
+    void getMetaData(QString path);
 	void changeQMLProperty(QString objName, const char* prop, QVariant value);
+    void keyPressEvent(QKeyEvent* event);
 };

@@ -71,10 +71,11 @@ Item {
         anchors.left: parent.left
         anchors.top: parent.top
         height: toolbarHeight
-        color: "#e7e8e9"
+        color: "#252323"
         Button {
             id: button
-            text: ".."
+            text: "X"
+            spacing: 4
             anchors.right: parent.right
             anchors.rightMargin: buttonHeight
             anchors.bottom: parent.bottom
@@ -82,13 +83,12 @@ Item {
             enabled: canMoveUp()
             flat: true
             onClicked: {
-                if(canMoveUp) {
-                    folderListModel.folder = folderListModel.parentFolder
-                }
+                picker.visible = false
             }
         }
         Text {
             id: filePath
+            color: "#ffffff"
             text: folderListModel.folder.toString().replace("file:///", "►").replace(new RegExp("/",'g'), "►")
             renderType: Text.NativeRendering
             elide: Text.ElideMiddle
@@ -166,22 +166,10 @@ Item {
                 }
             }
         }
-        Component {
-            id: headerDelegate
-            Rectangle {
-                height: rowHeight
-                color: "#a6aaa2"
-                border.color: "#a6aaa2"
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    height: headerTextSize
-                    font.bold: true
-                    elide: Text.ElideMiddle
-                    color: "#d04828"
-                    text: styleData.value !== undefined ? styleData.value : ""
-                }
-            }
-        }
     }
 }
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+ ##^##*/
