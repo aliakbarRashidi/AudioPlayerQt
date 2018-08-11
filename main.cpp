@@ -8,6 +8,7 @@
 #include <QSlider>
 #include <QKeyEvent>
 #include "inputhandler.h"
+#include "coverimageprovider.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,6 +19,8 @@ int main(int argc, char *argv[])
     QQuickStyle::setStyle("Material");
 
     QQmlEngine engine;
+    engine.addImageProvider(QLatin1String("coverart"), new CoverImageProvider); // create image provider for qml
+
     QQmlComponent component(&engine, "qrc:/main.qml");
     QObject *object = component.create();
 
@@ -25,11 +28,4 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("inputHandler", &inputHandler);
 
     return app.exec();
-}
-
-
-bool QApplication::notify(QObject* object, QEvent* event)
-{
-    qDebug() << "back key got pressed!";
-
 }

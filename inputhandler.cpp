@@ -1,5 +1,7 @@
 #include "inputhandler.h"
 
+QImage* InputHandler::coverQImage = new QImage;
+
 InputHandler::InputHandler(QObject* engineObject)
 {
     object = engineObject; // create the engine qObject
@@ -87,6 +89,7 @@ void InputHandler::openButtonClicked(QString path)
 
 void InputHandler::pauseButtonClicked()
 {
+    // This functions is called when the pauseButton is clicked
     if(player->isAudioAvailable()) // check if audio is loaded
     {
         // Pause button clicked -> pause
@@ -102,6 +105,7 @@ void InputHandler::pauseButtonClicked()
 
 void InputHandler::playButtonClicked()
 {
+    // This functions is called when the playButton is clicked
     if(player->isAudioAvailable()) // check if audio is loaded
     {
         // Play button clicked -> play
@@ -117,39 +121,70 @@ void InputHandler::playButtonClicked()
 
 void InputHandler::positionSliderMoved(quint16 position)
 {
-    qDebug() << "Slider position: " << position;
+    // This functions is called when the positionSlider is moved
     player->setPosition(position * 1000); // Set the player position to position * 1000 -> sec to msec
 }
 
 void InputHandler::getMetaData(QString path)
 {
-    // This function tries to get the meta data for the loaded audio
-    qDebug() << player->availableMetaData(); // Returns a list of keys there is meta-data available for.
-    QString artist = player->metaData(QMediaMetaData::ContributingArtist).toString();
-    QString title = player->metaData(QMediaMetaData::Title).toString();
-    qDebug() << "Artist: " << artist;
-    qDebug() << "Title: " << title;
+    // This functions gets the metadata from the .mp3
+    qDebug() << path;
+    QString validPath = makePathValidTagLib(path);
 
-    changeQMLProperty("title_label", "text", title);
-    changeQMLProperty("artist_label", "text", artist);
-}
+    // Create the TagLib File
+    TagLib::MPEG::File f(validPath.toUtf8().constData());
 
-void InputHandler::keyPressEvent(QKeyEvent* event)
-{
-    qDebug() << event->key();
-
-    if(event->key() == Qt::BackButton)
+    if(f.isValid()) // if valid
     {
+        QString artist = f.tag()->artist().toCString();
+        QString title = f.tag()->title().toCString();
+        QImage coverImage = getMPEGCoverImage(&f);
 
+        changeQMLProperty("coverArt", "source", QString("image://coverart/" + QString::number(coverImage.width())));
+        qDebug() << "generatedImageId:  " << QString("image://coverart/" + QString::number(coverImage.width()));
+
+        qDebug() << "Artist: " << artist;
+        qDebug() << "Title: " << title;
+
+        changeQMLProperty("title_label", "text", title);
+        changeQMLProperty("artist_label", "text", artist);
+
+    } else {
+        qDebug() << "Not metadata available.";
     }
-
 }
 
 void InputHandler::changeQMLProperty(QString objName, const char* prop, QVariant value)
 {
-    // Function to change qml properties in the main.qml
+    // This function changes qml properties in the main.qml
     QObject *obj = object->findChild<QObject*>(objName);
     if (obj)
         obj->setProperty(prop, value.toString());
+}
+
+QString InputHandler::makePathValidTagLib(QString path)
+{
+    // This function removes the file:// from the path because
+    // else TagLib can't find the file
+    return path.replace("file://", "");
+}
+
+QImage InputHandler::getMPEGCoverImage(TagLib::MPEG::File* file)
+{
+    // This function gets the MPEG cover art, if any
+    TagLib::ID3v2::Tag* tag = file->ID3v2Tag(true);
+    TagLib::ID3v2::FrameList frameList = tag->frameList("APIC");
+
+    if(frameList.isEmpty())
+    {
+        qDebug() << "No cover image for this song";
+        return QImage();
+    }
+
+    TagLib::ID3v2::AttachedPictureFrame* coverImage = static_cast<TagLib::ID3v2::AttachedPictureFrame*>(frameList.front());
+
+    coverQImage->loadFromData(reinterpret_cast<const uchar*>(coverImage->picture().data()) , static_cast<int>(coverImage->picture().size()));
+
+    return *coverQImage;
 }
 

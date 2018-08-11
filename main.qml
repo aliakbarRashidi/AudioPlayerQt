@@ -27,6 +27,17 @@ Window {
         }
     }
 
+    Image {
+        id: coverArt
+        x: parent.width/2 - width/2
+        y: parent.height - parent.height/1.07
+        width: parent.width/1.3
+        height: parent.height/2.2
+        //source: "icons/steam-avatar-profile-picture-0187.jpg"
+        source: "image://coverart/image"
+        objectName: "coverArt"
+    }
+
     Button { // playButton
         background: Image {
             id: play
@@ -38,8 +49,8 @@ Window {
         id: playButton
         x: parent.width/2 - width/2
         y: parent.height - parent.height/5
-        width: playButton.pressed ? 65 : 74
-        height: playButton.pressed ? 65 : 74
+        width: playButton.pressed ? 70 : 74
+        height: playButton.pressed ? 70 : 74
         smooth: true
         antialiasing: true
         bottomPadding: 0
@@ -63,8 +74,8 @@ Window {
         id: pauseButton
         x: parent.width/2 - width/2
         y: parent.height - parent.height/5
-        width: pauseButton.pressed ? 65 : 74
-        height: pauseButton.pressed ? 65 : 74
+        width: pauseButton.pressed ? 70 : 74
+        height: pauseButton.pressed ? 70 : 74
         antialiasing: true
         autoRepeat: false
         highlighted: false
@@ -114,31 +125,20 @@ Window {
             id: open
             anchors.fill: parent
             source: "icons/icon-list-100-white"
-            opacity: openButton.pressed ? 0.7 : 1.0
         }
         onClicked:filePicker.visible = true
         id: openButton
         x: parent.width/4 - width
         y: parent.height - parent.height/6.3
-        width: 25
-        height: 25
+        width: openButton.pressed ? 23 : 25
+        height: openButton.pressed ? 23 : 25
+        opacity: openButton.pressed ? 0.7 : 1.0
         antialiasing: true
         padding: 0
         leftPadding: 0
         rightPadding: 0
         bottomPadding: 0
         topPadding: 0
-    }
-
-    FilePicker {
-        id: filePicker
-        visible: false
-        anchors.fill: parent
-        showDotAndDotDot: true
-        onFileSelected: {
-            inputHandler.openButtonClicked(currentFolder() + "/" +fileName)
-            filePicker.visible = false
-        }
     }
 
     Label {
@@ -167,10 +167,14 @@ Window {
         objectName: "artist_label"
     }
 
-    Keys.onPressed: {
-            console.log(event.key)
+    FilePicker {
+        id: filePicker
+        visible: false
+        anchors.fill: parent
+        showDotAndDotDot: true
+        onFileSelected: {
+            inputHandler.openButtonClicked(currentFolder() + "/" +fileName)
+            filePicker.visible = false
         }
-    Keys.onBackPressed: {
-        console.log("samma wo oda woos?")
     }
 }
