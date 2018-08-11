@@ -8,11 +8,6 @@ CoverImageProvider::CoverImageProvider() : QQuickImageProvider(QQuickImageProvid
 
 QImage CoverImageProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
 {
-    qDebug() << "Samma daaaa?";
-    qDebug() << size->width() << "|||" << size->height();
-    qDebug() << requestedSize.width() << "|||" << requestedSize.height();
-    qDebug() << "Reqest id: " << id;
-
     // This function gets called from qml and provides an image request
     QImage* coverImage = InputHandler::coverQImage; // Request the cover image
 
