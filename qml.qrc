@@ -13,5 +13,7 @@
         <file>icons/play-thin-white.png</file>
         <file>icons/pause-thin-white.png</file>
         <file>icons/icon-list-100-white.png</file>
+        <file>icons/modern-play-white.png</file>
+        <file>icons/modern-pause-white.png</file>
     </qresource>
 </RCC>

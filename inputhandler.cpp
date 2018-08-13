@@ -53,11 +53,15 @@ void InputHandler::openButtonClicked(QString path)
 		// Gets the position of the player
 		connect(player, &QMediaPlayer::positionChanged, this, [&](qint64 pos)
         {
-            changeQMLProperty("positionSlider", "value", pos / 1000); // update positionSlider position
+            // Checks the global bool if the positionSlider is being pressed, if not update else do nothing
+            if(positionSliderisPressed == false)
+            {
+                changeQMLProperty("positionSlider", "value", pos / 1000); // update positionSlider position
 
-            // Set the label_timeElapsed label to song position
-            QString positionFormatted = QDateTime::fromTime_t(pos/1000).toUTC().toString("mm:ss");
-            changeQMLProperty("label_timeElapsed", "text", positionFormatted);
+                // Set the label_timeElapsed label to song position
+                QString positionFormatted = QDateTime::fromTime_t(pos/1000).toUTC().toString("mm:ss");
+                changeQMLProperty("label_timeElapsed", "text", positionFormatted);
+            }
         });
 
         // When the meta data changed
@@ -119,10 +123,20 @@ void InputHandler::playButtonClicked()
     }
 }
 
-void InputHandler::positionSliderMoved(quint16 position)
+void InputHandler::positionSliderMoved(quint16 position, bool pressed)
 {
     // This functions is called when the positionSlider is moved
-    player->setPosition(position * 1000); // Set the player position to position * 1000 -> sec to msec
+    // quint16 position in sec
+    // sets global bool if positionSlider is pressed, so when pressed it wont be updated by the slots
+    positionSliderisPressed = pressed;
+    if(pressed == false)
+        player->setPosition(position * 1000); // Set the player position to position * 1000 -> sec to msec
+
+    QString positionFormatted = QDateTime::fromTime_t(position).toUTC().toString("mm:ss");
+    changeQMLProperty("label_timeElapsed", "text", positionFormatted);
+
+    qDebug() << "Position slider pressed: " << pressed;
+    qDebug() << "label_timeElapsed: " << positionFormatted;
 }
 
 void InputHandler::getMetaData(QString path)

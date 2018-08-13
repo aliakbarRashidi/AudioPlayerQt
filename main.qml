@@ -18,8 +18,6 @@ Window {
     Material.theme: Material.Dark
     Material.accent: Material.Purple
     onClosing: { // the only way it works, since Qt 5.1, and the IDE still thinks its an error, thank you Qt <3
-        console.log("wo samma heite?")
-
         if(filePicker.visible == true)
         {
             close.accepted = false
@@ -33,7 +31,6 @@ Window {
         y: parent.height - parent.height/1.07
         width: parent.width/1.3
         height: parent.height/2.2
-        //source: "icons/steam-avatar-profile-picture-0187.jpg"
         source: "image://coverart/image"
         objectName: "coverArt"
     }
@@ -42,22 +39,16 @@ Window {
         background: Image {
             id: play
             anchors.fill: parent
-            source: "icons/play-icon-white.png"
-            opacity: playButton.pressed ? 0.6 : 1.0
+            source: "icons/modern-play-white.png"
         }
         onClicked: inputHandler.playButtonClicked()
         id: playButton
-        x: parent.width/2 - width/2
-        y: parent.height - parent.height/5
-        width: playButton.pressed ? 70 : 74
-        height: playButton.pressed ? 70 : 74
-        smooth: true
-        antialiasing: true
-        bottomPadding: 0
-        leftPadding: 0
-        topPadding: 0
-        font.family: "Times New Roman"
-        focusPolicy: Qt.StrongFocus
+        x: parent.width /2 - width/2
+        y: openButton.y - height/2.7
+        width: playButton.pressed ? 78 : 81
+        height: playButton.pressed ? 78 : 81
+        transformOrigin: Item.Center
+        opacity: playButton.pressed ? 0.6 : 1.0
         enabled: true
         visible: true
         objectName: "playButton"
@@ -67,20 +58,16 @@ Window {
         background: Image {
             id: pause
             anchors.fill: parent
-            source: "icons/pause-icon-white.png"
-            opacity: pauseButton.pressed ? 0.6 : 1.0
+            source: "icons/modern-pause-white.png"
         }
         onClicked: inputHandler.pauseButtonClicked()
         id: pauseButton
         x: parent.width/2 - width/2
-        y: parent.height - parent.height/5
-        width: pauseButton.pressed ? 70 : 74
-        height: pauseButton.pressed ? 70 : 74
-        antialiasing: true
-        autoRepeat: false
-        highlighted: false
-        wheelEnabled: false
-        padding: 0
+        y: openButton.y - height/2.7
+        width: pauseButton.pressed ? 78 : 81
+        height: pauseButton.pressed ? 78 : 81
+        transformOrigin: Item.Center
+        opacity: pauseButton.pressed ? 0.6 : 1.0
         enabled: false
         visible: false
         objectName: "pauseButton"
@@ -95,9 +82,13 @@ Window {
         antialiasing: true
         stepSize: 0.1
         to: 100
-        value: 0
         objectName: "positionSlider"
-        onMoved: inputHandler.positionSliderMoved(positionSlider.value)
+        onPressedChanged: {
+            inputHandler.positionSliderMoved(positionSlider.value, positionSlider.pressed)
+        }
+        onMoved: {
+            inputHandler.positionSliderMoved(positionSlider.value, positionSlider.pressed)
+        }
     }
 
     Label {
@@ -123,15 +114,17 @@ Window {
     Button {
         background: Image {
             id: open
+            antialiasing: true
+            transformOrigin: Item.Center
             anchors.fill: parent
             source: "icons/icon-list-100-white"
         }
         onClicked:filePicker.visible = true
         id: openButton
-        x: parent.width/4 - width
-        y: parent.height - parent.height/6.3
-        width: openButton.pressed ? 23 : 25
-        height: openButton.pressed ? 23 : 25
+        x: playButton.x/2 - width/2
+        y: parent.height/1.185
+        width: 23
+        height: 23
         opacity: openButton.pressed ? 0.7 : 1.0
         antialiasing: true
         padding: 0
@@ -178,3 +171,8 @@ Window {
         }
     }
 }
+
+/*##^## Designer {
+    D{i:2;anchors_height:74;anchors_width:74;anchors_x:283;anchors_y:384}D{i:9;anchors_height:25;anchors_width:25;anchors_x:135;anchors_y:402.5}
+}
+ ##^##*/

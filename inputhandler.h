@@ -26,12 +26,12 @@ public slots:
     void openButtonClicked(QString path);
     void playButtonClicked();
     void pauseButtonClicked();
-    void positionSliderMoved(quint16 position);
+    void positionSliderMoved(quint16 position, bool positionSliderIsPressed);
 
 private:
     QMediaPlayer* player; // Create MediaPlayer
     QObject* object;
-    bool positionSliderIsPressed = false;
+    bool positionSliderisPressed = false;
     void getMetaData(QString path);
     void changeQMLProperty(QString objName, const char* prop, QVariant value);
     QString makePathValidTagLib(QString path);
